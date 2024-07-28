@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificações do Sistema</title>
+</head>
+<body>
+    <h1>Notificações do Sistema</h1>
+    <button onclick="enviarNotificacao()">Enviar Notificação</button>
+
+    <script>
+        function enviarNotificacao() {
+            // Verifica se o navegador suporta notificações
+            if (!("Notification" in window)) {
+                alert("Este navegador não suporta notificações de desktop");
+            } 
+            // Verifica se o usuário já concedeu permissão para notificações
+            else if (Notification.permission === "granted") {
+                // Se a permissão foi concedida, cria uma notificação
+                new Notification("Notificação do Sistema", {
+                    body: "Esta é uma notificação de teste.",
+                    icon: "icon.png" // Opcional: Adicione um ícone
+                });
+            }
+            // Se a permissão não foi concedida, pede permissão ao usuário
+            else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(function (permission) {
+                    // Se o usuário conceder permissão, cria uma notificação
+                    if (permission === "granted") {
+                        new Notification("Notificação do Sistema", {
+                            body: "Esta é uma notificação de teste.",
+                            icon: "icon.png" // Opcional: Adicione um ícone
+                        });
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
